@@ -2,359 +2,449 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Loading...</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>สุขสันต์วันครบรอบ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+  /* ====== EDIT YOUR MESSAGE HERE (also see the JS "config" block near the bottom) ====== */
 
-body{
-    min-height:100vh;
-    background:#050505;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  :root{
+    --plum-deep:   #170a10;
+    --plum-mid:    #33101f;
+    --rose:        #ff8aa1;
+    --heart-red:   #ff4463;
+    --cream:       #fff8f3;
+    --ink:         #3a1220;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
     overflow:hidden;
-    color:white;
-}
+    background:var(--plum-deep);
+    font-family:'Sarabun',sans-serif;
+  }
 
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
+  #stage{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
     background:
-        radial-gradient(circle at 20% 20%, rgba(88,101,242,.18), transparent 25%),
-        radial-gradient(circle at 80% 80%, rgba(88,101,242,.18), transparent 25%);
-    animation:bgMove 12s infinite alternate ease-in-out;
-}
+      radial-gradient(circle at 50% 30%, var(--plum-mid) 0%, var(--plum-deep) 68%);
+    overflow:hidden;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
 
-@keyframes bgMove{
-    from{
-        transform:scale(1);
-    }
-    to{
-        transform:scale(1.15);
-    }
-}
+  /* animated heart-particle canvas background */
+  #pinkboard{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    display:block;
+    z-index:1;
+    pointer-events:none;
+  }
 
-.card{
+  #clickText{
+    appearance:none; border:none; background:none; cursor:pointer;
+    font-family:'Mitr',sans-serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 11vw, 4.2rem);
+    letter-spacing:0.02em;
+    color:var(--rose);
+    text-shadow:0 0 22px rgba(255,138,161,0.55), 0 0 60px rgba(255,68,99,0.25);
+    touch-action:manipulation;
+    animation:pulse 1.7s ease-in-out infinite;
+    padding:1.2rem 2rem;
     position:relative;
-    z-index:10;
+    z-index:2;
+  }
+  #clickText:active{ animation-play-state:paused; }
+  @keyframes pulse{
+    0%,100% { transform:scale(1);    text-shadow:0 0 22px rgba(255,138,161,0.55), 0 0 60px rgba(255,68,99,0.25); }
+    50%     { transform:scale(1.16); text-shadow:0 0 34px rgba(255,138,161,0.85), 0 0 90px rgba(255,68,99,0.4); }
+  }
 
-    width:400px;
-    max-width:90%;
-
-    padding:40px;
-
-    text-align:center;
-
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:30px;
-
-    box-shadow:
-        0 0 30px rgba(0,0,0,.5);
-}
-
-.avatar{
-    width:120px;
-    height:120px;
-
-    object-fit:cover;
-    border-radius:50%;
-
-    border:4px solid #5865F2;
-
-    box-shadow:
-        0 0 20px rgba(88,101,242,.6);
-}
-
-.name{
-    margin-top:20px;
-    font-size:30px;
-    font-weight:700;
-}
-
-.bio{
-    margin-top:8px;
-    color:#bdbdbd;
-    font-size:14px;
-}
-
-.discord-btn{
-    margin-top:25px;
-
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-
-    padding:14px 28px;
-
-    border-radius:15px;
-
-    text-decoration:none;
-    color:white;
-
-    background:#5865F2;
-
-    transition:.3s;
-}
-
-.discord-btn:hover{
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 0 25px rgba(88,101,242,.7);
-}
-
-.discord-btn i{
-    font-size:22px;
-}
-
-.footer{
-    margin-top:20px;
-    color:#777;
-    font-size:12px;
-}
-
-/* Snow */
-
-#snow{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:999;
-}
-
-.snowflake{
+  .hint{
     position:absolute;
-    top:-10px;
+    bottom:calc(9vh + env(safe-area-inset-bottom));
+    left:50%; transform:translateX(-50%);
+    color:var(--rose);
+    opacity:0.5;
+    font-size:0.85rem;
+    letter-spacing:0.04em;
+    z-index:2;
+  }
 
-    background:white;
-
-    border-radius:50%;
-    opacity:.8;
-
-    animation:snowFall linear forwards;
-}
-
-@keyframes snowFall{
-
-    from{
-        transform:translateY(-10px);
-    }
-
-    to{
-        transform:translateY(110vh);
-    }
-
-}
-
-/* Click Snow */
-
-.click-snow{
-    position:fixed;
-
-    width:8px;
-    height:8px;
-
-    background:white;
-
-    border-radius:50%;
-
+  /* -- burst hearts -- */
+  #particleLayer{
+    position:fixed; inset:0;
     pointer-events:none;
+    z-index:6;
+  }
+  .burst-heart{
+    position:absolute;
+    left:0; top:0;
+    color:var(--heart-red);
+    font-size:var(--fs, 16px);
+    transform:translate(-50%,-50%);
+    animation:burst 900ms cubic-bezier(.2,.7,.4,1) forwards;
+  }
+  @keyframes burst{
+    0%   { transform:translate(-50%,-50%) translate(0,0) scale(0.4) rotate(0deg); opacity:1; }
+    100% { transform:translate(-50%,-50%) translate(var(--tx), var(--ty)) scale(1) rotate(var(--rot)); opacity:0; }
+  }
 
-    z-index:1000;
+  /* -- white reveal circle -- */
+  .reveal-circle{
+    position:fixed;
+    background:var(--cream);
+    border-radius:50%;
+    transform:translate(-50%,-50%) scale(0);
+    transition:transform 1.15s cubic-bezier(.16,1,.3,1);
+    z-index:5;
+    pointer-events:none;
+  }
+  .reveal-circle.expand{ transform:translate(-50%,-50%) scale(1); }
 
-    animation:explodeSnow 1s forwards;
-}
+  /* -- message -- */
+  #message{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:0 8vw;
+    z-index:7;
+    opacity:0;
+    pointer-events:none;
+  }
+  #message.show{ opacity:1; }
 
-@keyframes explodeSnow{
+  #titleLine, #subLine{
+    margin:0;
+    color:var(--ink);
+  }
+  #titleLine{
+    font-family:'Mitr',sans-serif;
+    font-weight:600;
+    font-size:clamp(1.9rem, 8vw, 3.4rem);
+    line-height:1.25;
+  }
+  #subLine{
+    margin-top:0.9rem;
+    font-family:'Sarabun',sans-serif;
+    font-weight:400;
+    font-size:clamp(1rem, 4vw, 1.35rem);
+    color:#8a4152;
+    line-height:1.6;
+  }
 
-    from{
-        transform:translate(0,0) scale(1);
-        opacity:1;
-    }
+  .bounce-letter{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(70px);
+    animation:letterIn 700ms cubic-bezier(.32,1.65,.5,1) forwards;
+    animation-delay:var(--d, 0ms);
+  }
+  .bounce-letter.space{ width:0.32em; }
+  @keyframes letterIn{
+    to{ opacity:1; transform:translateY(0); }
+  }
 
-    to{
-        transform:
-            translate(var(--x), var(--y))
-            scale(0);
+  .final-heart{
+    margin-top:1.6rem;
+    font-size:clamp(1.6rem, 6vw, 2.2rem);
+    color:var(--heart-red);
+    opacity:0;
+    animation:letterIn 700ms cubic-bezier(.32,1.65,.5,1) forwards;
+    animation-delay:var(--heart-delay, 0ms);
+  }
 
-        opacity:0;
-    }
-
-}
-
+  @media (prefers-reduced-motion: reduce){
+    #clickText{ animation:none; }
+    .bounce-letter, .final-heart{ animation-duration:1ms !important; animation-delay:0ms !important; }
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
+  <div id="stage">
+    <canvas id="pinkboard"></canvas>
+    <button id="clickText" aria-label="คลิกเพื่อเปิดข้อความ">คลิก</button>
+    <div class="hint">แตะที่คำว่า “คลิก”</div>
+  </div>
 
-    <img
-        id="avatar"
-        class="avatar"
-        src=""
-        alt="avatar">
+  <div id="particleLayer"></div>
 
-    <div
-        id="name"
-        class="name">
-        Loading...
-    </div>
-
-    <div
-        id="bio"
-        class="bio">
-    </div>
-
-    <a
-        id="discordBtn"
-        class="discord-btn"
-        target="_blank">
-
-        <i class="fab fa-discord"></i>
-        Join Discord
-
-    </a>
-
-    <div class="footer">
-        Unwelcome to my community
-    </div>
-
-</div>
-
-<div id="snow"></div>
+  <div id="message" aria-hidden="true">
+    <h1 id="titleLine"></h1>
+    <p id="subLine"></p>
+    <div id="finalHeart" class="final-heart">♥</div>
+  </div>
 
 <script>
+(function(){
 
-/* Load JSON */
+  /* ================= EDIT YOUR MESSAGE HERE ================= */
+  var config = {
+    title: "สุขสันต์วันครบรอบนะค้าบที่รัก",
+    subtitle: "ขอบคุณที่อยู่คอยอยู่กันมาตลอดนะ รักเธอมากขึ้นทุกวันเลยงับ 🤍"
+  };
+  /* ============================================================ */
 
-fetch("./data.json")
-.then(res => res.json())
-.then(data => {
+  var stage = document.getElementById('stage');
+  var clickText = document.getElementById('clickText');
+  var particleLayer = document.getElementById('particleLayer');
+  var message = document.getElementById('message');
+  var titleLine = document.getElementById('titleLine');
+  var subLine = document.getElementById('subLine');
+  var finalHeart = document.getElementById('finalHeart');
 
-    document.title = data.name;
+  // ---- animated heart-particle canvas background ----
+  var stopBackgroundHearts = initHeartCanvas(document.getElementById('pinkboard'));
 
-    document.getElementById("name").textContent =
-        data.name;
+  function initHeartCanvas(canvas){
+    // tuned lighter than the original demo so it stays smooth on phones
+    var settings = {
+      particles: { length: 1600, duration: 4, velocity: 55, effect: -1.3, size: 7 }
+    };
 
-    document.getElementById("bio").textContent =
-        data.bio;
+    function Point(x, y){
+      this.x = typeof x !== 'undefined' ? x : 0;
+      this.y = typeof y !== 'undefined' ? y : 0;
+    }
+    Point.prototype.clone = function(){ return new Point(this.x, this.y); };
+    Point.prototype.length = function(length){
+      if (typeof length === 'undefined') return Math.sqrt(this.x * this.x + this.y * this.y);
+      this.normalize();
+      this.x *= length; this.y *= length;
+      return this;
+    };
+    Point.prototype.normalize = function(){
+      var length = this.length();
+      this.x /= length; this.y /= length;
+      return this;
+    };
 
-    document.getElementById("avatar").src =
-        data.avatar;
+    function Particle(){
+      this.position = new Point();
+      this.velocity = new Point();
+      this.acceleration = new Point();
+      this.age = 0;
+    }
+    Particle.prototype.initialize = function(x, y, dx, dy){
+      this.position.x = x; this.position.y = y;
+      this.velocity.x = dx; this.velocity.y = dy;
+      this.acceleration.x = dx * settings.particles.effect;
+      this.acceleration.y = dy * settings.particles.effect;
+      this.age = 0;
+    };
+    Particle.prototype.update = function(deltaTime){
+      this.position.x += this.velocity.x * deltaTime;
+      this.position.y += this.velocity.y * deltaTime;
+      this.velocity.x += this.acceleration.x * deltaTime;
+      this.velocity.y += this.acceleration.y * deltaTime;
+      this.age += deltaTime;
+    };
+    Particle.prototype.draw = function(context, image){
+      function ease(t){ return --t * t * t + 1; }
+      var size = image.width * ease(this.age / settings.particles.duration);
+      context.globalAlpha = 1 - this.age / settings.particles.duration;
+      context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
+    };
 
-    document.getElementById("discordBtn").href =
-        data.discord;
+    function ParticlePool(length){
+      var particles = new Array(length), firstActive = 0, firstFree = 0, duration = settings.particles.duration;
+      for (var i = 0; i < particles.length; i++) particles[i] = new Particle();
 
-})
-.catch(() => {
-
-    document.getElementById("name").textContent =
-        "Failed To Load";
-
-});
-
-/* Falling Snow */
-
-const snowContainer =
-document.getElementById("snow");
-
-function createSnowflake(){
-
-    const snow =
-    document.createElement("div");
-
-    snow.classList.add("snowflake");
-
-    const size =
-    Math.random()*6+2;
-
-    snow.style.width =
-    size + "px";
-
-    snow.style.height =
-    size + "px";
-
-    snow.style.left =
-    Math.random()*window.innerWidth + "px";
-
-    const duration =
-    Math.random()*5+5;
-
-    snow.style.animationDuration =
-    duration + "s";
-
-    snowContainer.appendChild(snow);
-
-    setTimeout(() => {
-        snow.remove();
-    }, duration*1000);
-}
-
-setInterval(createSnowflake,120);
-
-/* Click Snow Burst */
-
-document.addEventListener("click",(e)=>{
-
-    for(let i=0;i<15;i++){
-
-        const snow =
-        document.createElement("div");
-
-        snow.classList.add("click-snow");
-
-        snow.style.left =
-        e.clientX + "px";
-
-        snow.style.top =
-        e.clientY + "px";
-
-        const angle =
-        Math.random()*Math.PI*2;
-
-        const distance =
-        50 + Math.random()*80;
-
-        snow.style.setProperty(
-            "--x",
-            Math.cos(angle)*distance+"px"
-        );
-
-        snow.style.setProperty(
-            "--y",
-            Math.sin(angle)*distance+"px"
-        );
-
-        document.body.appendChild(snow);
-
-        setTimeout(()=>{
-            snow.remove();
-        },1000);
+      this.add = function(x, y, dx, dy){
+        particles[firstFree].initialize(x, y, dx, dy);
+        firstFree++;
+        if (firstFree === particles.length) firstFree = 0;
+        if (firstActive === firstFree) firstActive++;
+        if (firstActive === particles.length) firstActive = 0;
+      };
+      this.update = function(deltaTime){
+        var i;
+        if (firstActive < firstFree){
+          for (i = firstActive; i < firstFree; i++) particles[i].update(deltaTime);
+        }
+        if (firstFree < firstActive){
+          for (i = firstActive; i < particles.length; i++) particles[i].update(deltaTime);
+          for (i = 0; i < firstFree; i++) particles[i].update(deltaTime);
+        }
+        while (particles[firstActive].age >= duration && firstActive !== firstFree){
+          firstActive++;
+          if (firstActive === particles.length) firstActive = 0;
+        }
+      };
+      this.draw = function(context, image){
+        var i;
+        if (firstActive < firstFree){
+          for (i = firstActive; i < firstFree; i++) particles[i].draw(context, image);
+        }
+        if (firstFree < firstActive){
+          for (i = firstActive; i < particles.length; i++) particles[i].draw(context, image);
+          for (i = 0; i < firstFree; i++) particles[i].draw(context, image);
+        }
+      };
     }
 
-});
+    var context = canvas.getContext('2d'),
+        particles = new ParticlePool(settings.particles.length),
+        particleRate = settings.particles.length / settings.particles.duration,
+        time, running = true, rafId;
 
+    function pointOnHeart(t){
+      return new Point(
+        160 * Math.pow(Math.sin(t), 3),
+        130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+      );
+    }
+
+    var heartImage = (function(){
+      var c = document.createElement('canvas'), ctx = c.getContext('2d');
+      c.width = settings.particles.size; c.height = settings.particles.size;
+      function to(t){
+        var p = pointOnHeart(t);
+        p.x = settings.particles.size / 2 + (p.x * settings.particles.size) / 350;
+        p.y = settings.particles.size / 2 - (p.y * settings.particles.size) / 350;
+        return p;
+      }
+      ctx.beginPath();
+      var t = -Math.PI, p = to(t);
+      ctx.moveTo(p.x, p.y);
+      while (t < Math.PI){ t += 0.02; p = to(t); ctx.lineTo(p.x, p.y); }
+      ctx.closePath();
+      ctx.fillStyle = '#ff4463';
+      ctx.fill();
+      var img = new Image();
+      img.src = c.toDataURL();
+      return img;
+    })();
+
+    function render(){
+      if (!running) return;
+      rafId = requestAnimationFrame(render);
+      var newTime = Date.now() / 1000, deltaTime = newTime - (time || newTime);
+      time = newTime;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      var amount = particleRate * deltaTime;
+      for (var i = 0; i < amount; i++){
+        var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+        var dir = pos.clone().length(settings.particles.velocity);
+        particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+      }
+      particles.update(deltaTime);
+      particles.draw(context, heartImage);
+    }
+
+    function onResize(){
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', onResize);
+
+    setTimeout(function(){ onResize(); render(); }, 10);
+
+    return function stop(){
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', onResize);
+    };
+  }
+
+  // ---- build the bounce-in letters ----
+  function buildLine(container, text, startIndex, stepMs){
+    var idx = startIndex;
+    text.split('').forEach(function(ch){
+      var span = document.createElement('span');
+      span.className = 'bounce-letter' + (ch === ' ' ? ' space' : '');
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      span.style.setProperty('--d', (idx * stepMs) + 'ms');
+      container.appendChild(span);
+      idx++;
+    });
+    return idx;
+  }
+
+  var STEP = 45;
+  var nextIndex = buildLine(titleLine, config.title, 0, STEP);
+  nextIndex = buildLine(subLine, config.subtitle, nextIndex, STEP);
+  finalHeart.style.setProperty('--heart-delay', (nextIndex * STEP + 150) + 'ms');
+
+  // ---- heart burst effect ----
+  function spawnHeartBurst(x, y){
+    var count = 16;
+    for (var i = 0; i < count; i++){
+      var el = document.createElement('div');
+      el.className = 'burst-heart';
+      el.textContent = Math.random() < 0.8 ? '♥' : '♡';
+      var angle = (Math.PI * 2 * i / count) + (Math.random() * 0.5 - 0.25);
+      var dist = 60 + Math.random() * 90;
+      var tx = Math.cos(angle) * dist;
+      var ty = Math.sin(angle) * dist - 20;
+      el.style.setProperty('--tx', tx + 'px');
+      el.style.setProperty('--ty', ty + 'px');
+      el.style.setProperty('--rot', (Math.random() * 140 - 70) + 'deg');
+      el.style.setProperty('--fs', (12 + Math.random() * 14) + 'px');
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      particleLayer.appendChild(el);
+      (function(node){
+        setTimeout(function(){ node.remove(); }, 950);
+      })(el);
+    }
+  }
+
+  // ---- white circle reveal ----
+  function revealFrom(x, y){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var diameter = Math.hypot(Math.max(x, vw - x), Math.max(y, vh - y)) * 2.3;
+    var circle = document.createElement('div');
+    circle.className = 'reveal-circle';
+    circle.style.width = diameter + 'px';
+    circle.style.height = diameter + 'px';
+    circle.style.left = x + 'px';
+    circle.style.top = y + 'px';
+    document.body.appendChild(circle);
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        circle.classList.add('expand');
+      });
+    });
+
+    circle.addEventListener('transitionend', function(){
+      message.classList.add('show');
+      message.removeAttribute('aria-hidden');
+    }, { once:true });
+  }
+
+  var triggered = false;
+  function handleActivate(e){
+    if (triggered) return;
+    triggered = true;
+
+    var rect = clickText.getBoundingClientRect();
+    var x = rect.left + rect.width / 2;
+    var y = rect.top + rect.height / 2;
+
+    clickText.style.pointerEvents = 'none';
+    clickText.style.transition = 'opacity 250ms ease';
+    clickText.style.opacity = '0';
+    var hintEl = document.querySelector('.hint');
+    if (hintEl) hintEl.style.opacity = '0';
+
+    spawnHeartBurst(x, y);
+    revealFrom(x, y);
+    setTimeout(function(){ stopBackgroundHearts(); }, 1200);
+  }
+
+  clickText.addEventListener('click', handleActivate);
+
+})();
 </script>
-
 </body>
 </html>
